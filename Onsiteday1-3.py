@@ -1,9 +1,12 @@
 """Suvarnabhumi Airport"""
 def main():
     """MAIN fUNCTION"""
-    bangkok = input()
+    _ = input()
     destination = input()
     time = input()
+    hour = int(time[:2])
+    minute = int(time[3:5])
+    am_pm = time[2:]
     if destination == "To Sydney (SYD)":
         if time[6:8] == "PM":
             travel = time.replace("PM", "AM")
