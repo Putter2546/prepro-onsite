@@ -6,21 +6,26 @@ def main():
     time = input()
     hour = int(time[:2])
     minute = int(time[3:5])
-    am_pm = time[2:]
-    if destination == "To Sydney (SYD)":
-        if time[6:8] == "PM":
-            travel = time.replace("PM", "AM")
-            print("BKK - SYD")
-            print(travel)
-        else:
-            travel = time.replace("AM", "PM")
-            print("BKK - SYD")
-            print(travel)
-    elif destination == "To Ho Chi Minh (SGN)":
-        minute = int(time[3:5]) + 50
-        minutes = minute % 60
-        hours_min = minute // 60
-        hours = int(time[0:2]) + 1 + hours_min
-        print("BKK - SGN")
-        print("%02d:%02d" %(hours, minutes))
+    am_pm = time[-2:]
+    if destination[-4:-1] == "SYD":
+        hour += 12
+    elif destination[-4:-1] == "SGN":
+        hour += 1
+        minute += 50
+    elif destination[-4:-1] == "ATL":
+        hour += 9
+        minute += 55
+    elif destination[-4:-1] == "YVR":
+        hour += 2
+        minute += 20
+    elif destination[-4:-1] == "KTM":
+        hour += 11
+        minute += 45
+    hour += am_pm == "PM" and int(time[:2]) != 12 and 12 or am_pm == "AM" and int(time[:2]) == 12 and -12
+    hour += minute // 60
+    minute = minute % 60
+    am_pm = 0 <= hour < 12 and "AM" and "PM"
+    hour = hour % 12
+    print("BKK - %s" %destination[-4:-1])
+    print("%02d:%02d %s" %(hour == 0 and 12 or hour, minute, am_pm))
 main()
